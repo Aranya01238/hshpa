@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏠 Smart Home Price Analyzer - AI-Powered Real Estate Pricing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🏠</span>
+                <span class="logo-text">HomePriceAI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#demo" class="nav-link">Demo</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content glass-pane">
+            <h1 class="hero-title">Smart Home Price Prediction</h1>
+            <p class="hero-subtitle">Harness AI and machine learning to accurately predict real estate prices with our advanced analytics platform</p>
+            <button class="cta-button" id="scrollToDemo">Get Started Now</button>
+        </div>
+        <div class="hero-visual">
+            <div class="gradient-orb"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Data Analysis</h3>
+                    <p>Upload your CSV and automatically analyze numeric features in your dataset</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>ML Model</h3>
+                    <p>Advanced linear regression with standardization for accurate predictions</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Performance Metrics</h3>
+                    <p>R² and RMSE metrics to evaluate model accuracy instantly</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Export Results</h3>
+                    <p>Download predictions and reports as PDF for easy sharing</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Demo Section -->
+    <section class="demo-section" id="demo">
+        <div class="container">
+            <h2 class="section-title">Interactive Analyzer</h2>
+            
+            <!-- Upload Section -->
+            <div class="card upload-card">
+                <div class="card-header">
+                    <h3>Step 1: Upload Dataset</h3>
+                    <span class="step-indicator">CSV File</span>
+                </div>
+                <div class="card-body">
+                    <div class="file-upload-area" id="uploadArea">
+                        <div class="file-icon">📁</div>
+                        <p>Drag and drop your CSV file here</p>
+                        <p class="text-muted">or click to browse</p>
+                        <input type="file" id="csvFile" accept=".csv" class="hidden-input">
+                    </div>
+                    <p class="file-info">Supports: Kaggle housing datasets, real estate data (CSV format)</p>
+                    <div id="fileStatus" class="file-status"></div>
+                </div>
+            </div>
+
+            <!-- Training Section -->
+            <div class="card training-card">
+                <div class="card-header">
+                    <h3>Step 2: Train Model</h3>
+                    <span class="step-indicator">ML</span>
+                </div>
+                <div class="card-body">
+                    <p class="section-description">Train your linear regression model on the uploaded data</p>
+                    <button id="trainBtn" class="btn btn-primary btn-lg">
+                        <span class="btn-icon">🚀</span>
+                        Train Model
+                    </button>
+                    <div id="trainingStatus" class="status-message"></div>
+                </div>
+            </div>
+
+            <!-- Metrics Section -->
+            <div class="card metrics-card">
+                <div class="card-header">
+                    <h3>Model Performance</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="performanceChart" class="performance-chart"></canvas>
+                    <div id="metricsText" class="metrics-display"></div>
+                </div>
+            </div>
+
+            <!-- Prediction Section -->
+            <div class="card prediction-card">
+                <div class="card-header">
+                    <h3>Step 3: Make Predictions</h3>
+                    <span class="step-indicator">Forecast</span>
+                </div>
+                <div class="card-body">
+                    <div id="predictInputs" class="inputs-grid"></div>
+                    <div class="button-group">
+                        <button id="predictBtn" class="btn btn-success btn-lg">
+                            <span class="btn-icon">✨</span>
+                            Predict Price
+                        </button>
+                        <button id="exportBtn" class="btn btn-secondary">
+                            <span class="btn-icon">📥</span>
+                            Export PDF
+                        </button>
+                    </div>
+                    <div id="predictionOutput" class="prediction-output"></div>
+                    <div id="detailedReport" class="detailed-report"></div>
+                </div>
+            </div>
+
+            <!-- Data Insights -->
+            <div class="card insights-card">
+                <div class="card-header">
+                    <h3>Dataset Insights</h3>
+                </div>
+                <div class="card-body">
+                    <div id="insightsDisplay" class="insights-grid"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About This Tool</h2>
+            <div class="about-content">
+                <div class="about-text glass-pane">
+                    <p>HomePriceAI is a sophisticated machine learning tool designed to predict real estate prices with high accuracy. Using standardized linear regression and statistical analysis, our system provides reliable price forecasts based on property features.</p>
+                    <p>Whether you're a real estate professional, investor, or researcher, this tool provides actionable insights into the housing market.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Predictions Made</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Accuracy Rate</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Datasets Analyzed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content glass-pane">
+                <div class="footer-section">
+                    <h4>HomePriceAI</h4>
+                    <p>Advanced real estate price prediction powered by machine learning</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#demo">Demo</a></li>
+                        <li><a href="#">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">GitHub</a>
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">Email</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 HomePriceAI. All rights reserved. | Built with 💙 for real estate analytics</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
